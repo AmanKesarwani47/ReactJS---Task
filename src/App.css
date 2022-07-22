@@ -2,3 +2,8 @@
   padding: 0;
   margin: 0;
 }
+
+.hoverMovie:hover {
+  background-color: #7aa2dd;
+  color: white;
+}
