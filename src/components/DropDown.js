@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilmsData, setPeopleName } from "../redux/actions/movieActions";
+import { setFilmsData, setLoading, setPeopleName } from "../redux/actions/movieActions";
 
 const DropDown = () => {
     const people = useSelector((state) => state.movieReducer.people);
@@ -9,10 +9,16 @@ const DropDown = () => {
 
     const dispatch = useDispatch()
     const get_movies = async (movies) => {
-        dispatch(setFilmsData(await Promise.all(movies.map(async (movie) => {
-            const result = await axios.get(movie);
-            return result.data;
-        }))))
+        try {
+            dispatch(setFilmsData(await Promise.all(movies.map(async (movie) => {
+                const result = await axios.get(movie);
+                return result.data;
+            }))))
+        } catch (error) {
+            console.log(error);
+        } finally {
+            dispatch(setLoading(false));
+        }
     }
     return <div>
         <InputGroup size="lg" className="mb-3">
@@ -21,7 +27,7 @@ const DropDown = () => {
             <DropdownButton title="Select Character">
                 {people.map((plp, index) => {
                     return <>
-                        <Dropdown.Item key={plp} onClick={() => { dispatch(setPeopleName(plp.name)); get_movies(plp.films); }}>{plp.name}</Dropdown.Item>
+                        <Dropdown.Item key={plp} onClick={() => { dispatch(setPeopleName(plp.name)); get_movies(plp.films); dispatch(setLoading(true)); }}>{plp.name}</Dropdown.Item>
                     </>
                 })}
             </DropdownButton>
