@@ -27,3 +27,17 @@ export const setDescription = (description) => {
         payload: description
     }
 }
+
+export const setLoading = (loading) => {
+    return {
+        type: MovieTypes.SET_LOADING,
+        payload: loading
+    }
+}
+
+export const setLastYear = (lastYear) => {
+    return {
+        type: MovieTypes.SET_LAST_YEAR,
+        payload: lastYear
+    }
+}

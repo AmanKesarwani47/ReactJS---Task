@@ -4,7 +4,9 @@ const initialState = {
     people: [],
     peopleName: "",
     filmData: [],
-    description: ""
+    description: "",
+    loading: false,
+    lastYear: []
 }
 
 export const movieReducer = (state = initialState, { type, payload }) => {
@@ -17,6 +19,10 @@ export const movieReducer = (state = initialState, { type, payload }) => {
             return { ...state, filmData: payload };
         case MovieTypes.SET_DESCRIPTION:
             return { ...state, description: payload };
+        case MovieTypes.SET_LOADING:
+            return { ...state, loading: payload };
+        case MovieTypes.SET_LAST_YEAR:
+            return { ...state, lastYear: payload };
         default:
             return state;
     }
